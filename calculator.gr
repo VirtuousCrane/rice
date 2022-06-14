@@ -1,0 +1,35 @@
+import File from "sys/file"
+import Process from "sys/process"
+import Result from "result"
+import String from "string"
+import Number from "number"
+
+// Reading the input
+let stdin = File.stdin
+
+print("Please enter a number:")
+let (str, len) = Result.expect("Failed to read string", File.fdRead(stdin, 8));
+let num_str = String.trim(str);
+
+print("Please enter another number:")
+let (str, len) = Result.expect("Failed to read string", File.fdRead(stdin, 8));
+let num_str_2 = String.trim(str);
+
+print("Please enter an operator:")
+let (str, len) = Result.expect("Failed to read string", File.fdRead(stdin, 8));
+let operator = String.trim(str);
+
+// Parsing the input as numbers
+let num_1 = Result.expect("Failed to parse string", Number.parseInt(num_str, 10));
+let num_2 = Result.expect("Failed to parse string", Number.parseInt(num_str_2, 10));
+
+// Calculating the output
+let result = match (operator) {
+    "+" => num_1 + num_2,
+    "-" => num_1 - num_2,
+    "*" => num_1 * num_2,
+    "/" => num_1 / num_2,
+    _ => 0,
+}
+
+print("\nResult: " ++ toString(result))
